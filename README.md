@@ -3,6 +3,7 @@
 Sistema de licitações públicas transparentes, imutáveis e auditáveis utilizando Solana.
 
 **Equipe:** Douglas Dias Reis e Daniella Cristina Rodrigues
+
 **Hackathon:** Hackathon Solana - BH Onchain
 
 ---
