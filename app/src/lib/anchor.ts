@@ -6,7 +6,7 @@ import idl from "./idl.json";
 import { LicitaOnchain } from "./licita_onchain";
 
 export const PROGRAM_ID = new PublicKey(
-  process.env.NEXT_PUBLIC_PROGRAM_ID || "9Cif5osZpEmSnf5uWC21TL7oYgowjXd5k6EfkKYrbg9f"
+  process.env.NEXT_PUBLIC_PROGRAM_ID || idl.address
 );
 
 /**
@@ -34,7 +34,10 @@ export function useProgram() {
       }
     );
 
-    return new Program(idl as LicitaOnchain, provider);
+    // Garante que o programa use o ID configurado no .env ou no IDL
+    const idlWithAddress = { ...idl, address: PROGRAM_ID.toBase58() };
+    
+    return new Program(idlWithAddress as LicitaOnchain, provider);
   }, [connection, wallet]);
 }
 
