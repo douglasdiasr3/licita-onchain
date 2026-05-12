@@ -34,7 +34,7 @@ export function useProfile() {
           [Buffer.from("profile"), publicKey.toBuffer()],
           program.programId
         );
-        const data = await program.account.userProfile.fetch(profilePda);
+        const data: any = await program.account.userProfile.fetch(profilePda);
         
         if (isMounted) {
           setProfile({

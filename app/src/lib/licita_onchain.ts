@@ -1,16 +1,10 @@
-/**
- * Program IDL in camelCase format in order to be used in JS/TS.
- *
- * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/licita_onchain.json`.
- */
 export type LicitaOnchain = {
-  "address": "9Cif5osZpEmSnf5uWC21TL7oYgowjXd5k6EfkKYrbg9f",
+  "address": "7Kob7MLNcumNP9irCTPqY2H3iRF8nPuVXxU2JX1MDm7s",
   "metadata": {
-    "name": "licitaOnchain",
+    "name": "licita_onchain",
     "version": "0.1.0",
     "spec": "0.1.0",
-    "description": "Licita OnChain — pregão eletrônico com commit-reveal"
+    "description": "Licita OnChain \u2014 preg\u00e3o eletr\u00f4nico com commit-reveal"
   },
   "instructions": [
     {
@@ -18,7 +12,7 @@ export type LicitaOnchain = {
       "docs": [
         "Fornecedor envia proposta selada (apenas hash).",
         "hash = keccak256(value_le_bytes || nonce || bidder_pubkey)",
-        "Ninguém — nem o pregoeiro — consegue ver o valor antes do reveal."
+        "Ningu\u00e9m \u2014 nem o pregoeiro \u2014 consegue ver o valor antes do reveal."
       ],
       "discriminator": [
         236,
@@ -70,7 +64,7 @@ export type LicitaOnchain = {
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -89,8 +83,8 @@ export type LicitaOnchain = {
     {
       "name": "createLicitation",
       "docs": [
-        "Cria uma nova licitação. Apenas o pregoeiro (signer) pode fazer.",
-        "O hash do edital é registrado on-chain; o PDF fica off-chain (IPFS)."
+        "Cria uma nova licita\u00e7\u00e3o. Apenas o pregoeiro (signer) pode fazer.",
+        "O hash do edital \u00e9 registrado on-chain; o PDF fica off-chain (IPFS)."
       ],
       "discriminator": [
         90,
@@ -129,7 +123,7 @@ export type LicitaOnchain = {
               },
               {
                 "kind": "arg",
-                "path": "editalHash"
+                "path": "edital_hash"
               }
             ]
           }
@@ -140,7 +134,7 @@ export type LicitaOnchain = {
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -156,6 +150,14 @@ export type LicitaOnchain = {
         },
         {
           "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "orgao",
           "type": "string"
         },
         {
@@ -177,9 +179,78 @@ export type LicitaOnchain = {
       ]
     },
     {
+      "name": "createProfile",
+      "docs": [
+        "Cria ou atualiza o perfil do usu\u00e1rio on-chain."
+      ],
+      "discriminator": [
+        225,
+        205,
+        234,
+        143,
+        17,
+        186,
+        50,
+        220
+      ],
+      "accounts": [
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  102,
+                  105,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "type": "string"
+        },
+        {
+          "name": "role",
+          "type": {
+            "defined": {
+              "name": "UserRole"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "homologate",
       "docs": [
-        "Pregoeiro homologa o resultado após fim da fase de revelação."
+        "Pregoeiro homologa o resultado ap\u00f3s fim da fase de revela\u00e7\u00e3o."
       ],
       "discriminator": [
         78,
@@ -206,8 +277,8 @@ export type LicitaOnchain = {
     {
       "name": "revealProposal",
       "docs": [
-        "Fornecedor revela o conteúdo da proposta na fase de revelação.",
-        "O programa recomputa o hash e valida — se não bater, rejeita.",
+        "Fornecedor revela o conte\u00fado da proposta na fase de revela\u00e7\u00e3o.",
+        "O programa recomputa o hash e valida \u2014 se n\u00e3o bater, rejeita.",
         "Ranqueia automaticamente: menor valor vira \"lowest_value\"."
       ],
       "discriminator": [
@@ -305,6 +376,19 @@ export type LicitaOnchain = {
         53,
         33
       ]
+    },
+    {
+      "name": "userProfile",
+      "discriminator": [
+        32,
+        37,
+        119,
+        205,
+        179,
+        180,
+        13,
+        194
+      ]
     }
   ],
   "events": [
@@ -395,7 +479,7 @@ export type LicitaOnchain = {
     {
       "code": 6006,
       "name": "commitPhaseStillOpen",
-      "msg": "Commit phase is still open — wait for reveal phase"
+      "msg": "Commit phase is still open \u2014 wait for reveal phase"
     },
     {
       "code": 6007,
@@ -405,7 +489,7 @@ export type LicitaOnchain = {
     {
       "code": 6008,
       "name": "revealPhaseStillOpen",
-      "msg": "Reveal phase is still open — wait to homologate"
+      "msg": "Reveal phase is still open \u2014 wait to homologate"
     },
     {
       "code": 6009,
@@ -415,7 +499,7 @@ export type LicitaOnchain = {
     {
       "code": 6010,
       "name": "hashMismatch",
-      "msg": "Hash mismatch — value or nonce incorrect"
+      "msg": "Hash mismatch \u2014 value or nonce incorrect"
     },
     {
       "code": 6011,
@@ -425,12 +509,32 @@ export type LicitaOnchain = {
     {
       "code": 6012,
       "name": "unauthorized",
-      "msg": "unauthorized"
+      "msg": "Unauthorized"
     },
     {
       "code": 6013,
       "name": "noValidProposal",
       "msg": "No valid proposal to homologate"
+    },
+    {
+      "code": 6014,
+      "name": "nameTooLong",
+      "msg": "Name too long (max 50 chars)"
+    },
+    {
+      "code": 6015,
+      "name": "documentTooLong",
+      "msg": "Document too long (max 20 chars)"
+    },
+    {
+      "code": 6016,
+      "name": "descriptionTooLong",
+      "msg": "Description too long (max 200 chars)"
+    },
+    {
+      "code": 6017,
+      "name": "orgaoTooLong",
+      "msg": "Orgao too long (max 50 chars)"
     }
   ],
   "types": [
@@ -457,6 +561,14 @@ export type LicitaOnchain = {
             "type": "string"
           },
           {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "orgao",
+            "type": "string"
+          },
+          {
             "name": "editalUri",
             "type": "string"
           },
@@ -476,7 +588,7 @@ export type LicitaOnchain = {
             "name": "status",
             "type": {
               "defined": {
-                "name": "licitationStatus"
+                "name": "LicitationStatus"
               }
             }
           },
@@ -610,7 +722,7 @@ export type LicitaOnchain = {
             "name": "status",
             "type": {
               "defined": {
-                "name": "proposalStatus"
+                "name": "ProposalStatus"
               }
             }
           },
@@ -678,6 +790,52 @@ export type LicitaOnchain = {
           },
           {
             "name": "disqualified"
+          }
+        ]
+      }
+    },
+    {
+      "name": "userProfile",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "document",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "type": {
+              "defined": {
+                "name": "UserRole"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "userRole",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "pregoeiro"
+          },
+          {
+            "name": "fornecedor"
           }
         ]
       }

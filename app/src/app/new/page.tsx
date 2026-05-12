@@ -31,7 +31,7 @@ export default function NewLicitationPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!publicKey || !program) {
+    if (!publicKey || !program || !profile) {
       toast.error("Conecte sua carteira primeiro");
       return;
     }
