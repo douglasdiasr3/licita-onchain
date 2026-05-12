@@ -6,6 +6,8 @@ Sistema de licitações públicas transparentes, imutáveis e auditáveis utiliz
 
 **Hackathon:** Hackathon Solana - BH Onchain
 
+**URL:** [https://licitaonchain.vercel.app/](https://licitaonchain.vercel.app/) (devnet)
+
 ---
 
 ## 📋 Problema que Resolve
